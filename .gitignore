@@ -483,3 +483,4 @@ $RECYCLE.BIN/
 
 # Manual
 EcommerceAPI/appsettings.Development.json
+EcommerceAPI/EcommerceAPI.db
