@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 EcommerceAPI/appsettings.Development.json
 EcommerceAPI/EcommerceAPI.db-wal
 EcommerceAPI/EcommerceAPI.db-shm
+EcommerceAPI/EcommerceAPI.sqbpro
