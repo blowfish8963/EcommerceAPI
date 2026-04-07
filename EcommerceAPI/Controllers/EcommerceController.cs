@@ -20,3 +20,8 @@ public class EcommerceController<T> : ControllerBase where T : class
         return Ok(await _ecommerceService.ReadAll());
     }
 }
+
+public class CategoryController : EcommerceController<Category>
+{
+    public CategoryController(IEcommerceService<Category> service) : base(service) {}
+}

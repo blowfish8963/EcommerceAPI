@@ -22,7 +22,6 @@ public class Program
         {
             // development things
         }
-        app.UseRouting();
         app.MapControllers();
         app.Run();
     }
