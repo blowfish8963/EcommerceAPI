@@ -5,18 +5,23 @@ namespace EcommerceAPI.Repositories;
 
 public interface IEcommerceRepository<T> where T : class
 {
-    
+    //Task Create(T entity);
+    //Task<T> ReadById(int id);
+    Task<IEnumerable<T>> ReadAll();
+    //Task Update(int id, T newEntity);
+    //Task Delete(int id);
 }
 
 public class EcommerceRepository<T> : IEcommerceRepository<T> where T : class
 {
     private readonly EcommerceContext _dbContext;
-    private readonly DbSet<T> _dbSet;
     public EcommerceRepository(EcommerceContext DbContext)
     {
         _dbContext = DbContext;
-        _dbSet = DbContext.Set<T>();
     }
 
-    
+    public async Task<IEnumerable<T>> ReadAll()
+    {
+        return await _dbContext.Set<T>().ToListAsync();
+    }
 }

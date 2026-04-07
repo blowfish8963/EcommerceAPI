@@ -17,6 +17,13 @@ public class Program
         builder.Services.AddScoped(typeof(IEcommerceService<>), typeof(EcommerceService<>));
 
         var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            // development things
+        }
+        app.UseRouting();
+        app.MapControllers();
         app.Run();
     }
 }

@@ -4,7 +4,7 @@ namespace EcommerceAPI.Services;
 
 public interface IEcommerceService<T> where T : class
 {
-    
+    Task<IEnumerable<T>> ReadAll();
 }
 public class EcommerceService<T> : IEcommerceService<T> where T : class
 {
@@ -14,5 +14,8 @@ public class EcommerceService<T> : IEcommerceService<T> where T : class
         _eccommerceRepository = EcommerceRepository;
     }
 
-    
+    public async Task<IEnumerable<T>> ReadAll()
+    {
+        return await _eccommerceRepository.ReadAll();
+    }
 }
