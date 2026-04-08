@@ -27,7 +27,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>
@@ -52,7 +52,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Sale", b =>
@@ -66,7 +66,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasKey("SaleId");
 
-                    b.ToTable("Sales");
+                    b.ToTable("Sales", (string)null);
                 });
 
             modelBuilder.Entity("ProductSale", b =>
@@ -81,7 +81,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("SalesSaleId");
 
-                    b.ToTable("ProductSale");
+                    b.ToTable("ProductSale", (string)null);
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>

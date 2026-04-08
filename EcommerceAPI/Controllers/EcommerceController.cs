@@ -14,10 +14,35 @@ public class EcommerceController<T> : ControllerBase where T : class
         _ecommerceService = EcommerceService;
     }
     
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] T entity)
+    {
+        await _ecommerceService.Create(entity);
+        return Ok(entity);
+    }
+
     [HttpGet]
     public async Task<IActionResult> ReadAll()
     {
         return Ok(await _ecommerceService.ReadAll());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> ReadById(int id)
+    {
+        return Ok(await _ecommerceService.ReadById(id));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] T entity)
+    {
+        return Ok(_ecommerceService.Update(entity));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        return Ok(_ecommerceService.Delete(id));
     }
 }
 
