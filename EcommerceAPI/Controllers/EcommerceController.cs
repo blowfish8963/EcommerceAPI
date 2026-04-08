@@ -50,3 +50,13 @@ public class CategoryController : EcommerceController<Category>
 {
     public CategoryController(IEcommerceService<Category> service) : base(service) {}
 }
+
+public class ProductController : EcommerceController<Product>
+{
+    public ProductController(IEcommerceService<Product> service) : base(service) {}
+}
+
+public class SaleController : EcommerceController<Sale>
+{
+    public SaleController(IEcommerceService<Sale> service) : base(service) {}
+}
