@@ -2,6 +2,7 @@
 using EcommerceAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20260409215310_ProductSale fix")]
+    partial class ProductSalefix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
@@ -90,6 +93,21 @@ namespace EcommerceAPI.Migrations
                     b.ToTable("Sales");
                 });
 
+            modelBuilder.Entity("ProductSale", b =>
+                {
+                    b.Property<int>("ProductsProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SalesSaleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductsProductId", "SalesSaleId");
+
+                    b.HasIndex("SalesSaleId");
+
+                    b.ToTable("ProductSale");
+                });
+
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>
                 {
                     b.HasOne("EcommerceAPI.Models.Category", "Category")
@@ -118,6 +136,21 @@ namespace EcommerceAPI.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("ProductSale", b =>
+                {
+                    b.HasOne("EcommerceAPI.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EcommerceAPI.Models.Sale", null)
+                        .WithMany()
+                        .HasForeignKey("SalesSaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>

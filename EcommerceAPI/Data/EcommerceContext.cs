@@ -13,4 +13,13 @@ public class EcommerceContext : DbContext
     public DbSet<Category> Categories {get;set;}
     public DbSet<Product> Products {get;set;}
     public DbSet<Sale> Sales {get;set;}
+    public DbSet<ProductSale> ProductSales {get;set;}
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Product>()
+        .HasMany(x => x.Sales)
+        .WithMany(x => x.Products)
+        .UsingEntity<ProductSale>();
+    }
 }
