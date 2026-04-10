@@ -60,3 +60,8 @@ public class SaleController : EcommerceController<Sale>
 {
     public SaleController(IEcommerceService<Sale> service) : base(service) {}
 }
+
+public class ProductSaleController : EcommerceController<ProductSale>
+{
+    public ProductSaleController(IEcommerceService<ProductSale> service) : base(service) {}
+}

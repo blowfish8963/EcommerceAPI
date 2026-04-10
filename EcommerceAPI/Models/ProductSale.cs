@@ -8,8 +8,6 @@ public class ProductSale()
     public int ProductId {get;set;}
     public int SaleId {get;set;}
     public int ProductQty {get;set;}
-    [Required]
-    public Product Product {get;set;}
-    [Required]
-    public Sale Sale {get;set;}
+    public Product? Product {get;set;}
+    public Sale? Sale {get;set;}
 }
