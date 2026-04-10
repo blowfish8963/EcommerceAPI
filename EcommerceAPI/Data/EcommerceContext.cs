@@ -14,9 +14,17 @@ public class EcommerceContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Product>()
-        .HasMany(x => x.Sales)
-        .WithMany(x => x.Products)
-        .UsingEntity<ProductSale>();
+        modelBuilder.Entity<ProductSale>()
+        .HasKey(x => new {x.ProductId, x.SaleId});
+
+        modelBuilder.Entity<ProductSale>()
+        .HasOne(x => x.Product)
+        .WithMany(x => x.ProductSales)
+        .HasForeignKey(x => x.ProductId);
+
+        modelBuilder.Entity<ProductSale>()
+        .HasOne(x => x.Sale)
+        .WithMany(x => x.ProductSales)
+        .HasForeignKey(x => x.SaleId);
     }
 }
