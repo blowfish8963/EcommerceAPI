@@ -1,4 +1,5 @@
 using EcommerceAPI.Data;
+using static EcommerceAPI.Data.Seeder;
 using EcommerceAPI.Repositories;
 using EcommerceAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace EcommerceAPI;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder();
 
@@ -20,7 +21,11 @@ public class Program
 
         if (app.Environment.IsDevelopment())
         {
-            // development things
+            using (var scope = app.Services.CreateAsyncScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<EcommerceContext>();
+                await SeedDb(dbContext);
+            }
         }
         app.MapControllers();
         app.Run();
