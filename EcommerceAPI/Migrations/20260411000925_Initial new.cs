@@ -5,7 +5,7 @@
 namespace EcommerceAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initialnew : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,8 +44,7 @@ namespace EcommerceAPI.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductName = table.Column<string>(type: "TEXT", nullable: true),
                     ProductPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    ProductQty = table.Column<int>(type: "INTEGER", nullable: false),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: true)
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,28 +53,32 @@ namespace EcommerceAPI.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId");
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductSale",
+                name: "ProductSales",
                 columns: table => new
                 {
-                    ProductsProductId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SalesSaleId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ProductSaleId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SaleId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductQty = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductSale", x => new { x.ProductsProductId, x.SalesSaleId });
+                    table.PrimaryKey("PK_ProductSales", x => x.ProductSaleId);
                     table.ForeignKey(
-                        name: "FK_ProductSale_Products_ProductsProductId",
-                        column: x => x.ProductsProductId,
+                        name: "FK_ProductSales_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductSale_Sales_SalesSaleId",
-                        column: x => x.SalesSaleId,
+                        name: "FK_ProductSales_Sales_SaleId",
+                        column: x => x.SaleId,
                         principalTable: "Sales",
                         principalColumn: "SaleId",
                         onDelete: ReferentialAction.Cascade);
@@ -87,16 +90,21 @@ namespace EcommerceAPI.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductSale_SalesSaleId",
-                table: "ProductSale",
-                column: "SalesSaleId");
+                name: "IX_ProductSales_ProductId",
+                table: "ProductSales",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSales_SaleId",
+                table: "ProductSales",
+                column: "SaleId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductSale");
+                name: "ProductSales");
 
             migrationBuilder.DropTable(
                 name: "Products");

@@ -54,16 +54,22 @@ namespace EcommerceAPI.Migrations
 
             modelBuilder.Entity("EcommerceAPI.Models.ProductSale", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductSaleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SaleId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductQty")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ProductId", "SaleId");
+                    b.Property<int>("SaleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductSaleId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("SaleId");
 
@@ -82,21 +88,6 @@ namespace EcommerceAPI.Migrations
                     b.HasKey("SaleId");
 
                     b.ToTable("Sales");
-                });
-
-            modelBuilder.Entity("ProductSale", b =>
-                {
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SalesSaleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductsProductId", "SalesSaleId");
-
-                    b.HasIndex("SalesSaleId");
-
-                    b.ToTable("ProductSale");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>
@@ -127,21 +118,6 @@ namespace EcommerceAPI.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("ProductSale", b =>
-                {
-                    b.HasOne("EcommerceAPI.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceAPI.Models.Sale", null)
-                        .WithMany()
-                        .HasForeignKey("SalesSaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>

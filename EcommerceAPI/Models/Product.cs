@@ -7,6 +7,5 @@ public class Product
     public decimal ProductPrice {get;set;}
     public int CategoryId {get;set;}
     public Category? Category {get;set;} 
-    public List<Sale>? Sales {get;set;}
     public List<ProductSale>? ProductSales {get;set;}
 }

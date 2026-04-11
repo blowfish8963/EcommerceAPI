@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20260407011200_SaleUnfix")]
-    partial class SaleUnfix
+    [Migration("20260411000925_Initial new")]
+    partial class Initialnew
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace EcommerceAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ProductName")
@@ -48,14 +48,35 @@ namespace EcommerceAPI.Migrations
                     b.Property<decimal>("ProductPrice")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProductQty")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("EcommerceAPI.Models.ProductSale", b =>
+                {
+                    b.Property<int>("ProductSaleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductQty")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SaleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductSaleId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("ProductSales");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Sale", b =>
@@ -72,43 +93,44 @@ namespace EcommerceAPI.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("ProductSale", b =>
-                {
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SalesSaleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductsProductId", "SalesSaleId");
-
-                    b.HasIndex("SalesSaleId");
-
-                    b.ToTable("ProductSale");
-                });
-
             modelBuilder.Entity("EcommerceAPI.Models.Product", b =>
                 {
                     b.HasOne("EcommerceAPI.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ProductSale", b =>
+            modelBuilder.Entity("EcommerceAPI.Models.ProductSale", b =>
                 {
-                    b.HasOne("EcommerceAPI.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
+                    b.HasOne("EcommerceAPI.Models.Product", "Product")
+                        .WithMany("ProductSales")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EcommerceAPI.Models.Sale", null)
-                        .WithMany()
-                        .HasForeignKey("SalesSaleId")
+                    b.HasOne("EcommerceAPI.Models.Sale", "Sale")
+                        .WithMany("ProductSales")
+                        .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("EcommerceAPI.Models.Product", b =>
+                {
+                    b.Navigation("ProductSales");
+                });
+
+            modelBuilder.Entity("EcommerceAPI.Models.Sale", b =>
+                {
+                    b.Navigation("ProductSales");
                 });
 #pragma warning restore 612, 618
         }
